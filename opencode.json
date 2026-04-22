@@ -1,0 +1,249 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "file:///home/jimwong/.config/opencode/plugin/nl-resume-bridge",
+    "oh-my-openagent@latest",
+    "file:///home/jimwong/.config/opencode/plugin/session-memory-auto"
+  ],
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": [
+        "node",
+        "/home/jimwong/.config/Code/User/globalStorage/rooveterinaryinc.roo-cline/github-mcp/node_modules/@modelcontextprotocol/server-github/dist/index.js"
+      ],
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "REDACTED_TOKEN"
+      },
+      "enabled": true
+    },
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/jimwong"
+      ],
+      "enabled": true
+    },
+    "puppeteer": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "enabled": true
+    },
+    "memory": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp@0.0.38"
+      ],
+      "enabled": true
+    }
+  },
+  "provider": {
+    "digitflow": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "DigitFlow API",
+      "options": {
+        "baseURL": "http://127.0.0.1:8787/v1",
+        "headers": {
+          "Authorization": "Bearer ***REMOVED-API-KEY***"
+        }
+      },
+      "models": {
+        "claude-opus-4-6": {
+          "name": "Claude Opus 4.6"
+        },
+        "gpt-5.4": {
+          "name": "GPT-5.4"
+        },
+        "gemini-3-pro-preview": {
+          "name": "Gemini 3 Pro Preview"
+        },
+        "claude-opus-4-5-20251101-thinking": {
+          "name": "Claude Opus 4.5 Thinking"
+        },
+        "gpt-5.3-codex": {
+          "name": "GPT-5.3 Codex"
+        },
+        "claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6"
+        },
+        "gemini-2.0-flash": {
+          "name": "Gemini 2.0 Flash"
+        },
+        "gemini-1.5-pro": {
+          "name": "Gemini 1.5 Pro"
+        },
+        "grok-4-1-fast-non-reasoning": {
+          "name": "Grok 4.1 Fast"
+        },
+        "gpt-4o": {
+          "name": "GPT-4o"
+        },
+        "gemini-1.5-flash": {
+          "name": "Gemini 1.5 Flash"
+        },
+        "claude-haiku-4-5-20251001": {
+          "name": "Claude Haiku 4.5"
+        },
+        "gpt-4o-mini": {
+          "name": "GPT-4o Mini"
+        },
+        "o3": {
+          "name": "OpenAI o3"
+        },
+        "o3-mini": {
+          "name": "OpenAI o3 Mini"
+        }
+      }
+    },
+    "custom-ai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Custom AI (HK-1 网关)",
+      "options": {
+        "baseURL": "https://hk-1.pucode.com/v1",
+        "headers": {
+          "Authorization": "Bearer ***REMOVED-API-KEY***"
+        }
+      },
+      "models": {
+        "gemini-3.1-pro-high": {
+          "name": "Gemini 3.1 Pro High"
+        },
+        "gemini-3-flash": {
+          "name": "Gemini 3 Flash"
+        },
+        "gemini-3.1-flash-lite": {
+          "name": "Gemini 3.1 Flash Lite"
+        },
+        "gemini-3.1-pro-low": {
+          "name": "Gemini 3.1 Pro Low"
+        }
+      }
+    },
+    "pucode": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "PUCode API",
+      "options": {
+        "baseURL": "https://hk-1.pucode.com/v1",
+        "headers": {
+          "Authorization": "Bearer ***REMOVED-API-KEY***"
+        }
+      },
+      "models": {
+        "gpt-5.4": {
+          "name": "GPT-5.4"
+        },
+        "gpt-5.3-codex": {
+          "name": "GPT-5.3 Codex"
+        },
+        "claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6"
+        },
+        "claude-opus-4-6": {
+          "name": "Claude Opus 4.6"
+        },
+        "claude-opus-4-5-20251101-thinking": {
+          "name": "Claude Opus 4.5 Thinking"
+        }
+      }
+    },
+    "gemini-gateway": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Gemini 网关 (AG/AG2 双线路)",
+      "options": {
+        "baseURL": "https://hk-1.pucode.com/v1",
+        "headers": {
+          "Authorization": "Bearer ***REMOVED-API-KEY***"
+        }
+      },
+      "models": {
+        "ag/claude-opus-4-6": {
+          "name": "Claude Opus 4.6 (AG)"
+        },
+        "ag/claude-opus-4-6-thinking": {
+          "name": "Claude Opus 4.6 Thinking (AG)"
+        },
+        "ag/gemini-3.1-pro-high": {
+          "name": "Gemini 3.1 Pro High (AG)"
+        },
+        "ag/gemini-3.1-pro-high-thinking": {
+          "name": "Gemini 3.1 Pro High Thinking (AG)"
+        },
+        "ag/claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6 (AG)"
+        },
+        "ag/claude-sonnet-4-6-thinking": {
+          "name": "Claude Sonnet 4.6 Thinking (AG)"
+        },
+        "ag/gemini-3-flash": {
+          "name": "Gemini 3 Flash (AG)"
+        },
+        "ag/gemini-3-flash-thinking": {
+          "name": "Gemini 3 Flash Thinking (AG)"
+        },
+        "ag/gemini-3.1-pro-low": {
+          "name": "Gemini 3.1 Pro Low (AG)"
+        },
+        "ag/gemini-3.1-pro-low-thinking": {
+          "name": "Gemini 3.1 Pro Low Thinking (AG)"
+        },
+        "ag/gemini-3.1-flash-lite": {
+          "name": "Gemini 3.1 Flash Lite (AG)"
+        },
+        "ag/gemini-3.1-flash-lite-thinking": {
+          "name": "Gemini 3.1 Flash Lite Thinking (AG)"
+        }
+      }
+    },
+    "novai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "NovaI API (Grok 系列)",
+      "options": {
+        "baseURL": "https://us.novaiapi.com/v1",
+        "headers": {
+          "Authorization": "Bearer ***REMOVED-API-KEY***"
+        }
+      },
+      "models": {
+        "[次]grok-4-deepsearch": {
+          "name": "Grok 4 Deep Search"
+        },
+        "[次]grok-4.2": {
+          "name": "Grok 4.2"
+        },
+        "[次]grok-420-agents": {
+          "name": "Grok 420 Agents"
+        },
+        "[次]grok-4": {
+          "name": "Grok 4"
+        },
+        "[次]grok-420-fast": {
+          "name": "Grok 420 Fast"
+        },
+        "[次]grok-420-thinking": {
+          "name": "Grok 420 Thinking"
+        },
+        "[次]grok-3": {
+          "name": "Grok 3"
+        }
+      }
+    }
+  }
+}
