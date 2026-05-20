@@ -1,0 +1,21 @@
+# Build artifacts
+*.tar.gz
+*.zip
+
+# Temporary backups (keep them local only, never publish)
+*.bak-*
+.matrix-bak/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
