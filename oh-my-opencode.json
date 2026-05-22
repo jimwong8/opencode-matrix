@@ -1,0 +1,252 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/oh-my-opencode.schema.json",
+  "model_fallback": true,
+  "runtime_fallback": {
+    "enabled": true
+  },
+  "_matrix": {
+    "name": "4-Model Role-Specialized Panel",
+    "version": "1.0",
+    "updated_at": "2026-05-22",
+    "roles": {
+      "architect": {
+        "model": "atlascloud/owl",
+        "variant": null,
+        "responsibility": "系统设计、架构决策、复杂推理、代码审查、编排调度"
+      },
+      "builder": {
+        "model": "deepseek/deepseek-v4-pro",
+        "variant": "high",
+        "responsibility": "后端实现、API开发、数据模型、大型重构、工具编写"
+      },
+      "crafter": {
+        "model": "opencode-go/kimi-k2.6",
+        "variant": "high",
+        "responsibility": "前端开发、UI/UX、文档创作、多模态处理"
+      },
+      "scout": {
+        "model": "deepseek/deepseek-v4-flash",
+        "variant": "medium",
+        "responsibility": "代码搜索、信息收集、测试执行、构建验证、快速查询"
+      }
+    }
+  },
+  "agents": {
+    "sisyphus": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "swarm-orchestrator": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "prometheus": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "oracle": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "metis": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "momus": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "swarm-reviewer": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "hephaestus": {
+      "model": "deepseek/deepseek-v4-pro",
+      "variant": "high",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-flash",
+        "opencode-go/kimi-k2.6"
+      ]
+    },
+    "swarm-backend": {
+      "model": "deepseek/deepseek-v4-pro",
+      "variant": "high",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-flash",
+        "opencode-go/kimi-k2.6"
+      ]
+    },
+    "skill-writer": {
+      "model": "deepseek/deepseek-v4-pro",
+      "variant": "high",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-flash",
+        "opencode-go/kimi-k2.6"
+      ]
+    },
+    "atlas": {
+      "model": "opencode-go/kimi-k2.6",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-pro",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "swarm-frontend": {
+      "model": "opencode-go/kimi-k2.6",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-pro",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "multimodal-looker": {
+      "model": "opencode-go/kimi-k2.6",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-pro",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "explore": {
+      "model": "opencode-go/qwen3.5-plus",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    },
+    "librarian": {
+      "model": "opencode-go/qwen3.5-plus",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    },
+    "sisyphus-junior": {
+      "model": "opencode-go/qwen3.5-plus",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    },
+    "build": {
+      "model": "opencode-go/qwen3.5-plus",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    },
+    "swarm-tester": {
+      "model": "opencode-go/qwen3.5-plus",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    }
+  },
+  "categories": {
+    "ultrabrain": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "unspecified-high": {
+      "model": "atlascloud/owl",
+      "fallback_models": [
+        "deepseek/deepseek-v4-pro",
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "deep": {
+      "model": "deepseek/deepseek-v4-pro",
+      "variant": "high",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-flash",
+        "opencode-go/kimi-k2.6"
+      ]
+    },
+    "visual-engineering": {
+      "model": "opencode-go/kimi-k2.6",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-pro",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "artistry": {
+      "model": "opencode-go/kimi-k2.6",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-pro",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "writing": {
+      "model": "opencode-go/kimi-k2.6",
+      "fallback_models": [
+        "atlascloud/owl",
+        "deepseek/deepseek-v4-pro",
+        "deepseek/deepseek-v4-flash"
+      ]
+    },
+    "quick": {
+      "model": "deepseek/deepseek-v4-flash",
+      "variant": "medium",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    },
+    "unspecified-low": {
+      "model": "deepseek/deepseek-v4-flash",
+      "variant": "medium",
+      "fallback_models": [
+        "opencode-go/kimi-k2.6",
+        "deepseek/deepseek-v4-pro",
+        "atlascloud/owl"
+      ]
+    }
+  }
+}

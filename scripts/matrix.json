@@ -1,0 +1,78 @@
+{
+  "_comment": "4 模型角色矩阵 - 改这里就够了。修改后运行 ~/.config/opencode/scripts/apply-matrix.sh 即可应用",
+  "version": "1.0",
+  "updated_at": "2026-05-20",
+  "roles": {
+    "architect": {
+      "model": "atlascloud/owl",
+      "variant": null,
+      "responsibility": "系统设计、架构决策、复杂推理、代码审查、编排调度"
+    },
+    "builder": {
+      "model": "deepseek/deepseek-v4-pro",
+      "variant": "high",
+      "responsibility": "后端实现、API开发、数据模型、大型重构、工具编写"
+    },
+    "crafter": {
+      "model": "opencode-go/kimi-k2.6",
+      "variant": null,
+      "responsibility": "前端开发、UI/UX、文档创作、多模态处理"
+    },
+    "scout": {
+      "model": "opencode-go/qwen3.5-plus",
+      "responsibility": "代码搜索、信息收集、测试执行、构建验证、快速查询"
+    }
+  },
+  "agent_to_role": {
+    "sisyphus": "architect",
+    "swarm-orchestrator": "architect",
+    "prometheus": "architect",
+    "oracle": "architect",
+    "metis": "architect",
+    "momus": "architect",
+    "swarm-reviewer": "architect",
+    "hephaestus": "builder",
+    "swarm-backend": "builder",
+    "skill-writer": "builder",
+    "atlas": "crafter",
+    "swarm-frontend": "crafter",
+    "multimodal-looker": "crafter",
+    "explore": "scout",
+    "librarian": "scout",
+    "sisyphus-junior": "scout",
+    "build": "scout",
+    "swarm-tester": "scout"
+  },
+  "category_to_role": {
+    "ultrabrain": "architect",
+    "unspecified-high": "architect",
+    "deep": "builder",
+    "visual-engineering": "crafter",
+    "artistry": "crafter",
+    "writing": "crafter",
+    "quick": "scout",
+    "unspecified-low": "scout"
+  },
+  "fallback_chains": {
+    "architect": [
+      "builder",
+      "crafter",
+      "scout"
+    ],
+    "builder": [
+      "architect",
+      "scout",
+      "crafter"
+    ],
+    "crafter": [
+      "architect",
+      "builder",
+      "scout"
+    ],
+    "scout": [
+      "crafter",
+      "builder",
+      "architect"
+    ]
+  }
+}
