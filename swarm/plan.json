@@ -1,0 +1,112 @@
+{
+  "goal": "P1 后端聚合接口：为首页终端面板提供路由链路、熔断状态、限流聚合、安全事件、Key 生命周期数据",
+  "status": "planning",
+  "estimated_waves": 3,
+  "current_wave": 0,
+  "updated_at": "2026-05-21T12:45:00+08:00",
+  "summary": "P0 首页重设计已完成并部署。P1 阶段实现 11 个后端聚合 API，让首页各面板从 mock 数据切换到真实数据。",
+  "waves": [
+    {
+      "wave": 1,
+      "parallel": false,
+      "tasks": [
+        {
+          "id": "be-001",
+          "agent": "swarm-backend",
+          "title": "创建 dashboard_runtime_handler.go — 路由链路 + 熔断状态 API",
+          "description": "创建 internal/httpserver/dashboard_runtime_handler.go，实现以下 API：\n1. GET /admin/runtime/recent-routes — 最近路由记录（数据源：s.admin.RecentUsage + s.admin.RecentAudit）\n2. GET /admin/runtime/route-trace?request_id=xxx — 单条路由追踪\n3. GET /admin/channels/circuit-status — 各渠道熔断状态（数据源：s.healthChecker.LatestReport().Checks + s.admin.ListChannels）\n4. GET /admin/channels/circuit-history — 熔断历史（从 health checker 聚合）\n\n在 server.go 中注册这 4 个路由。\n\n参考现有模式：adminObservabilitySummary 等 handler 方法直接在 server.go 中。新 handler 文件用独立函数接收 *Server 参数。\n\n关键类型：\n- admin.UsageRow: tenant_id, request_id, model, provider, total_tokens, estimated_cost, created_at\n- admin.AuditRow: request_id, route_task, route_model, route_provider, cache_status, created_at\n- health.CheckResult: name, status, latency_ms, error, checked_at\n- admin.ChannelRow: id, name, provider, status, latency_ms, total_requests",
+          "context": "仓库路径：/home/jimwong/projects/llm-gateway\n现有 handler 模式参考：internal/httpserver/server.go 中的 adminObservabilitySummary (L920)、adminObservabilityHotspots\nhealth checker 参考：internal/health/checker.go 的 Report 和 CheckResult 类型\nadmin store 参考：internal/admin/postgres.go 的 RecentUsage、RecentAudit、ListChannels 方法\nserver.go 中 s.Server 字段包含：admin *admin.Store, healthChecker *health.HealthChecker, billing *billing.Store, quota *quota.Limiter, audit *audit.Store, tenantKeys *tenant.Store, apiKeyUsageStore *auth.APIKeyUsageStore",
+          "files_to_modify": [
+            "internal/httpserver/dashboard_runtime_handler.go",
+            "internal/httpserver/server.go"
+          ],
+          "depends_on": [],
+          "status": "completed",
+          "result": "✅ 创建 dashboard_runtime_handler.go (263行)，实现 4 个 API：recent-routes、route-trace、circuit-status、circuit-history。编译通过。commit ce66d6f。"
+        }
+      ]
+    },
+    {
+      "wave": 2,
+      "parallel": true,
+      "tasks": [
+        {
+          "id": "be-002",
+          "agent": "swarm-backend",
+          "title": "限流聚合 API — hot-keys / hot-tenants / summary",
+          "description": "在 dashboard_runtime_handler.go 中实现以下 API：\n1. GET /admin/rate-limit/summary — 限流汇总（数据源：s.quota.Summary() 聚合）\n2. GET /admin/rate-limit/hot-keys — 热点 Key 排行（数据源：s.billing.Hotspots() 的 Models 部分）\n3. GET /admin/rate-limit/hot-tenants — 热点租户排行（数据源：s.billing.Hotspots() 的 Tenants 部分）\n\n在 server.go 中注册这 3 个路由。\n\n关键类型：\n- quota.Summary: tenant_id, used, limit, remaining, rejected\n- billing.HotspotsResult: tenants []HotspotRow, models []HotspotRow\n- billing.HotspotRow: key, requests, total_tokens, estimated_cost",
+          "context": "参考 be-001 中已创建的 dashboard_runtime_handler.go 文件。quota.Limiter 有 Summary(ctx, tenantID) 方法。billing.Store 有 Hotspots(ctx, filter) 方法。",
+          "files_to_modify": [
+            "internal/httpserver/dashboard_runtime_handler.go",
+            "internal/httpserver/server.go"
+          ],
+          "depends_on": ["be-001"],
+          "status": "in_progress",
+          "result": ""
+        },
+        {
+          "id": "be-003",
+          "agent": "swarm-backend",
+          "title": "安全事件 + Key 生命周期 API",
+          "description": "在 dashboard_runtime_handler.go 中实现以下 API：\n1. GET /admin/security/events — 安全事件流（数据源：s.audit.SearchEvents() 按 type 过滤安全相关事件）\n2. GET /admin/security/summary — 安全事件汇总（按事件类型聚合计数）\n3. GET /admin/keys/expiring — 即将过期的 Key（数据源：s.tenantKeys.ListAllKeys()，按 expires_at 过滤）\n4. GET /admin/keys/quota-risk — 配额风险 Key（数据源：s.apiKeyUsageStore.Summary()，按使用率排序）\n\n在 server.go 中注册这 4 个路由。\n\n关键类型：\n- audit.AuditEventRecord: request_id, route_task, route_model, route_provider, cache_status, created_at\n- tenant.TenantKey: tenant_id, provider, api_key(encrypted), created_at\n- auth.APIKeyUsageSummary: key_id, total_requests, total_tokens, period_start, period_end",
+          "context": "参考 be-001。audit.Store 有 SearchEvents(ctx, tenantID, provider, fromDate, toDate, limit, offset) 方法。tenant.Store 有 ListAllKeys(ctx) 方法。auth.APIKeyUsageStore 有 Summary(ctx, filter) 方法。",
+          "files_to_modify": [
+            "internal/httpserver/dashboard_runtime_handler.go",
+            "internal/httpserver/server.go"
+          ],
+          "depends_on": ["be-001"],
+          "status": "pending",
+          "result": ""
+        }
+      ]
+    },
+    {
+      "wave": 3,
+      "parallel": false,
+      "tasks": [
+        {
+          "id": "be-004",
+          "agent": "swarm-backend",
+          "title": "前端 API 对接 — 替换 SecurityRadarPanel 和 CostQuotaPanel 为真实数据",
+          "description": "修改前端组件，将 mock 数据替换为真实 API 调用：\n1. 在 web/admin/src/lib/api/dashboard.ts 中添加新 API 调用函数：getSecurityEvents, getSecuritySummary, getCircuitStatus, getRateLimitSummary\n2. 修改 DashboardAdminOverviewSection.tsx：SecurityRadarPanel 的 events 数据来自 /admin/security/events API\n3. 修改 CostQuotaPanel.tsx：数据来自 /admin/rate-limit/summary + /admin/observability/summary\n4. 修改 dashboard-home.mappers.ts：添加 mapSecurityEvents、mapCircuitStatus 映射函数\n\n使用 TanStack Query 的 useQuery，refetchInterval 30s。",
+          "context": "前端仓库：web/admin/src/\n现有 API 调用模式参考：web/admin/src/lib/api/dashboard.ts 中的 getAdminHealth, getAdminSummary\n现有组件参考：DashboardAdminOverviewSection.tsx, SecurityRadarPanel.tsx, CostQuotaPanel.tsx\n类型参考：web/admin/src/components/dashboard/dashboard-home.types.ts 中的 SecurityEventItem",
+          "files_to_modify": [
+            "web/admin/src/lib/api/dashboard.ts",
+            "web/admin/src/components/dashboard/DashboardAdminOverviewSection.tsx",
+            "web/admin/src/components/dashboard/SecurityRadarPanel.tsx",
+            "web/admin/src/components/dashboard/CostQuotaPanel.tsx",
+            "web/admin/src/components/dashboard/dashboard-home.mappers.ts"
+          ],
+          "depends_on": ["be-002", "be-003"],
+          "status": "pending",
+          "result": ""
+        },
+        {
+          "id": "test-001",
+          "agent": "swarm-tester",
+          "title": "P1 API 测试 — handler + 前端对接测试",
+          "description": "1. 创建 internal/httpserver/dashboard_runtime_handler_test.go，测试所有 11 个 API 端点的基本响应（HTTP 200、JSON 结构正确）\n2. 更新 DashboardPage.test.tsx，验证真实 API 数据渲染\n3. 运行 go test ./internal/httpserver/ 和 npx vitest run\n\n使用 httptest.NewRecorder + httptest.NewRequest 模式（参考 observability_handler_test.go）。",
+          "context": "测试模式参考：internal/httpserver/observability_handler_test.go\n前端测试模式参考：web/admin/src/pages/DashboardPage.test.tsx",
+          "files_to_modify": [
+            "internal/httpserver/dashboard_runtime_handler_test.go",
+            "web/admin/src/pages/DashboardPage.test.tsx"
+          ],
+          "depends_on": ["be-004"],
+          "status": "pending",
+          "result": ""
+        },
+        {
+          "id": "review-001",
+          "agent": "swarm-reviewer",
+          "title": "P1 聚合接口审查",
+          "description": "审查所有 P1 变更：\n1. dashboard_runtime_handler.go — API 正确性、错误处理、数据源使用\n2. server.go — 路由注册是否正确\n3. 前端 API 对接 — useQuery 使用、错误边界、加载态\n4. 测试覆盖 — handler 测试是否覆盖所有端点\n5. 构建是否通过（go build + npm run build）",
+          "context": "涉及文件：internal/httpserver/dashboard_runtime_handler.go, server.go, web/admin/src/lib/api/dashboard.ts, DashboardAdminOverviewSection.tsx, SecurityRadarPanel.tsx, CostQuotaPanel.tsx, dashboard-home.mappers.ts",
+          "files_to_modify": [],
+          "depends_on": ["test-001"],
+          "status": "pending",
+          "result": ""
+        }
+      ]
+    }
+  ]
+}

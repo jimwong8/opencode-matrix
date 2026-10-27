@@ -1,0 +1,7 @@
+{
+  "name": "context-compressor",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "description": "Inject session memory summaries into OpenCode compaction prompts (Layer 3)"
+}

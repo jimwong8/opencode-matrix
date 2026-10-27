@@ -1,0 +1,17 @@
+{
+  "agents": {
+    "brainstormer": {
+      "temperature": 0.8
+    },
+    "commander": {
+      "thinking": {
+        "type": "enabled",
+        "budgetTokens": 100000
+      }
+    }
+  },
+  "features": {
+    "mindmodelInjection": true
+  },
+  "compactionThreshold": 0.5
+}
