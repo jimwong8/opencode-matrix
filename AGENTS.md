@@ -15,6 +15,6 @@
 
 ## MCP 和 Skills
 
-- 可用 MCP: github, filesystem, puppeteer, memory, playwright, mgrep
+- 可用 MCP: github, filesystem, puppeteer, memory, playwright
 - 可用 Skills: 包含 28 个从 Roo 导入的 skills
 - 如需使用特定 MCP 或 Skill，明确告知用户
