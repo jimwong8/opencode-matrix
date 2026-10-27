@@ -1,5 +1,7 @@
 ---
 description: Skill authoring specialist for creating, editing, and auditing Agent Skills packages
+model: deepseek/deepseek-v4-pro
+reasoningEffort: high
 mode: subagent
 temperature: 0.1
 permission:

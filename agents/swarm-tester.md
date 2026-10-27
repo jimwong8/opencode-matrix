@@ -1,5 +1,7 @@
 ---
 description: Test specialist for unit tests, integration tests, regression coverage, and failure analysis
+model: deepseek/deepseek-flash
+variant: medium
 mode: subagent
 temperature: 0.1
 permission:
@@ -11,6 +13,13 @@ permission:
   task:
     "*": deny
     "explore": allow
+  skill:
+    "*": deny
+    "test-driven-development": allow
+    "test-fixing": allow
+    "python-testing-patterns": allow
+    "systematic-debugging": allow
+    "verification-before-completion": allow
 ---
 You are the test specialist.
 

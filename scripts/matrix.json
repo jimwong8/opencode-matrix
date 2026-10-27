@@ -1,10 +1,10 @@
 {
   "_comment": "4 模型角色矩阵 - 改这里就够了。修改后运行 ~/.config/opencode/scripts/apply-matrix.sh 即可应用",
   "version": "1.0",
-  "updated_at": "2026-05-20",
+  "updated_at": "2026-10-27",
   "roles": {
     "architect": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "variant": null,
       "responsibility": "系统设计、架构决策、复杂推理、代码审查、编排调度"
     },
@@ -14,13 +14,14 @@
       "responsibility": "后端实现、API开发、数据模型、大型重构、工具编写"
     },
     "crafter": {
-      "model": "opencode-go/kimi-k2.6",
-      "variant": null,
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "responsibility": "前端开发、UI/UX、文档创作、多模态处理"
     },
     "scout": {
-      "model": "opencode-go/qwen3.5-plus",
-      "responsibility": "代码搜索、信息收集、测试执行、构建验证、快速查询"
+      "model": "deepseek/deepseek-flash",
+      "responsibility": "代码搜索、信息收集、测试执行、构建验证、快速查询",
+      "variant": "medium"
     }
   },
   "agent_to_role": {

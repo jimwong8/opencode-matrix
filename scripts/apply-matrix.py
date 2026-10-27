@@ -55,27 +55,25 @@ ROLE_EMOJI = {
 # 已知顶级模型的手动评分加成（绕过缓存元数据不完整的问题）
 # 格式: { "provider/model": {"role": bonus_points} } 或 { "provider/model": {"all": bonus} }
 KNOWN_MODEL_BOOSTS = {
-    # AtlasCloud Owl: 实际是高端模型，但缓存元数据不全
-    "atlascloud/owl": {"architect": 60, "builder": 30, "crafter": 25, "scout": 5},
-    # Claude 系列（顶级推理）
-    "xstx/claude-opus-4-7": {"architect": 50, "builder": 40, "crafter": 35, "scout": 10},
-    "xstx/claude-opus-4-7-thinking": {"architect": 60, "builder": 35, "crafter": 30, "scout": 0},
-    "novai/claude-opus-4-7-thinking": {"architect": 60, "builder": 35, "crafter": 30, "scout": 0},
-    "novai/claude-opus-4-7": {"architect": 50, "builder": 40, "crafter": 35, "scout": 10},
-    "novai/claude-sonnet-4-6": {"architect": 35, "builder": 35, "crafter": 45, "scout": 25},
-    "novai/claude-haiku-4-5": {"architect": 15, "builder": 20, "crafter": 25, "scout": 50},
-    # GPT-5 系列
-    "novai/gpt-5.5": {"architect": 50, "builder": 45, "crafter": 35, "scout": 15},
-    "novai/gpt-5.4": {"architect": 40, "builder": 40, "crafter": 30, "scout": 20},
-    "digitflow/gpt-5.5": {"architect": 50, "builder": 45, "crafter": 35, "scout": 15},
-    "digitflow/gpt-5.4": {"architect": 40, "builder": 40, "crafter": 30, "scout": 20},
-    # Gemini
-    "novai/gemini-3.1-pro": {"architect": 35, "builder": 30, "crafter": 50, "scout": 20},
-    "novai/gemini-3-pro": {"architect": 30, "builder": 25, "crafter": 45, "scout": 25},
-    # 已对接的免费 opencode 模型微调
-    "opencode/minimax-m2.5-free": {"builder": 15, "architect": 5},  # 长上下文+编码强
-    "opencode/nemotron-3-super-free": {"crafter": 10, "architect": 5},  # 推理+多模态
-    "opencode/deepseek-v4-flash-free": {"scout": 15, "builder": 5},  # 快速+广 variant
+    # 自建 llm-gateway（10.100.1.17，实测可用）
+    "llm-gateway/council": {"architect": 55, "builder": 20},  # 三模型并行共识，设计/评审
+    "llm-gateway/council-review": {"architect": 45},  # 产物审查面板
+    "llm-gateway/glm-5.2": {"builder": 25, "crafter": 20},
+    "llm-gateway/deepseek-v4-flash": {"builder": 20, "scout": 20},
+    "llm-gateway/longcat-2.5-preview": {"builder": 20, "architect": 10},
+    # deepseek 官方 API
+    "deepseek/deepseek-v4-pro": {"architect": 35, "builder": 40},
+    "deepseek/deepseek-flash": {"scout": 30},
+    # opencode zen 免费池（已核对在售）
+    "opencode/mimo-v2.6-flash-free": {"architect": 15, "builder": 10},
+    "opencode/nemotron-3.5-lightning-free": {"architect": 10, "crafter": 15},
+    "opencode/nemotron-3-ultra-free": {"architect": 20, "builder": 10},
+    "opencode/deepseek-v4.1-flash-free": {"scout": 15, "builder": 5},
+    "opencode/glm-5.3-flash-free": {"builder": 10, "crafter": 10},
+    # github-copilot 订阅
+    "github-copilot/claude-opus-5-5": {"architect": 40, "builder": 30},
+    "github-copilot/claude-sonnet-5": {"architect": 25, "builder": 30, "crafter": 30},
+    "github-copilot/gpt-6.1-sol": {"architect": 30, "builder": 25},
 }
 
 # 角色对模型特性的权重矩阵
@@ -306,13 +304,20 @@ def save_matrix(m):
 
 
 def list_available_models():
-    """从 oh-my-opencode 缓存读取可用模型列表，按 provider 分组"""
+    """从 oh-my-opencode 缓存读取可用模型列表，按 provider 分组
+
+    缓存里同时包含 models.dev 全量 provider 目录（200+），只有 connected
+    列表中的 provider 才真正配置了凭据；不按它过滤会把死 provider 一起列出来。
+    """
     if not PROVIDER_CACHE.exists():
         print("⚠ 缓存不存在，需先在 OpenCode 中至少打开过一次")
         return {}
     data = json.loads(PROVIDER_CACHE.read_text())
+    connected = set(data.get("connected") or [])
     out = {}
     for provider, models in data.get("models", {}).items():
+        if connected and provider not in connected:
+            continue
         ids = []
         for m in models:
             mid = m.get("id", "")

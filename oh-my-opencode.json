@@ -7,10 +7,10 @@
   "_matrix": {
     "name": "4-Model Role-Specialized Panel",
     "version": "1.0",
-    "updated_at": "2026-05-22",
+    "updated_at": "2026-10-27",
     "roles": {
       "architect": {
-        "model": "atlascloud/owl",
+        "model": "opencode/mimo-v2.6-flash-free",
         "variant": null,
         "responsibility": "系统设计、架构决策、复杂推理、代码审查、编排调度"
       },
@@ -20,12 +20,12 @@
         "responsibility": "后端实现、API开发、数据模型、大型重构、工具编写"
       },
       "crafter": {
-        "model": "opencode-go/kimi-k2.6",
+        "model": "opencode/nemotron-3.5-lightning-free",
         "variant": "high",
         "responsibility": "前端开发、UI/UX、文档创作、多模态处理"
       },
       "scout": {
-        "model": "deepseek/deepseek-v4-flash",
+        "model": "deepseek/deepseek-flash",
         "variant": "medium",
         "responsibility": "代码搜索、信息收集、测试执行、构建验证、快速查询"
       }
@@ -33,219 +33,230 @@
   },
   "agents": {
     "sisyphus": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "swarm-orchestrator": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "prometheus": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "oracle": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "metis": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "momus": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "swarm-reviewer": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "hephaestus": {
       "model": "deepseek/deepseek-v4-pro",
       "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
-        "deepseek/deepseek-v4-flash",
-        "opencode-go/kimi-k2.6"
+        "opencode/mimo-v2.6-flash-free",
+        "deepseek/deepseek-flash",
+        "opencode/nemotron-3.5-lightning-free"
       ]
     },
     "swarm-backend": {
       "model": "deepseek/deepseek-v4-pro",
       "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
-        "deepseek/deepseek-v4-flash",
-        "opencode-go/kimi-k2.6"
+        "opencode/mimo-v2.6-flash-free",
+        "deepseek/deepseek-flash",
+        "opencode/nemotron-3.5-lightning-free"
       ]
     },
     "skill-writer": {
       "model": "deepseek/deepseek-v4-pro",
       "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
-        "deepseek/deepseek-v4-flash",
-        "opencode-go/kimi-k2.6"
+        "opencode/mimo-v2.6-flash-free",
+        "deepseek/deepseek-flash",
+        "opencode/nemotron-3.5-lightning-free"
       ]
     },
     "atlas": {
-      "model": "opencode-go/kimi-k2.6",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
+        "opencode/mimo-v2.6-flash-free",
         "deepseek/deepseek-v4-pro",
-        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-flash"
       ]
     },
     "swarm-frontend": {
-      "model": "opencode-go/kimi-k2.6",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
+        "opencode/mimo-v2.6-flash-free",
         "deepseek/deepseek-v4-pro",
-        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-flash"
       ]
     },
     "multimodal-looker": {
-      "model": "opencode-go/kimi-k2.6",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
+        "opencode/mimo-v2.6-flash-free",
         "deepseek/deepseek-v4-pro",
-        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-flash"
       ]
     },
     "explore": {
-      "model": "opencode-go/qwen3.5-plus",
+      "model": "deepseek/deepseek-flash",
+      "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     },
     "librarian": {
-      "model": "opencode-go/qwen3.5-plus",
+      "model": "deepseek/deepseek-flash",
+      "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     },
     "sisyphus-junior": {
-      "model": "opencode-go/qwen3.5-plus",
+      "model": "deepseek/deepseek-flash",
+      "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     },
     "build": {
-      "model": "opencode-go/qwen3.5-plus",
+      "model": "deepseek/deepseek-flash",
+      "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     },
     "swarm-tester": {
-      "model": "opencode-go/qwen3.5-plus",
+      "model": "deepseek/deepseek-flash",
+      "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     }
   },
   "categories": {
     "ultrabrain": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "unspecified-high": {
-      "model": "atlascloud/owl",
+      "model": "opencode/mimo-v2.6-flash-free",
       "fallback_models": [
         "deepseek/deepseek-v4-pro",
-        "opencode-go/kimi-k2.6",
-        "deepseek/deepseek-v4-flash"
+        "opencode/nemotron-3.5-lightning-free",
+        "deepseek/deepseek-flash"
       ]
     },
     "deep": {
       "model": "deepseek/deepseek-v4-pro",
       "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
-        "deepseek/deepseek-v4-flash",
-        "opencode-go/kimi-k2.6"
+        "opencode/mimo-v2.6-flash-free",
+        "deepseek/deepseek-flash",
+        "opencode/nemotron-3.5-lightning-free"
       ]
     },
     "visual-engineering": {
-      "model": "opencode-go/kimi-k2.6",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
+        "opencode/mimo-v2.6-flash-free",
         "deepseek/deepseek-v4-pro",
-        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-flash"
       ]
     },
     "artistry": {
-      "model": "opencode-go/kimi-k2.6",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
+        "opencode/mimo-v2.6-flash-free",
         "deepseek/deepseek-v4-pro",
-        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-flash"
       ]
     },
     "writing": {
-      "model": "opencode-go/kimi-k2.6",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "variant": "high",
       "fallback_models": [
-        "atlascloud/owl",
+        "opencode/mimo-v2.6-flash-free",
         "deepseek/deepseek-v4-pro",
-        "deepseek/deepseek-v4-flash"
+        "deepseek/deepseek-flash"
       ]
     },
     "quick": {
-      "model": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-flash",
       "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     },
     "unspecified-low": {
-      "model": "deepseek/deepseek-v4-flash",
+      "model": "deepseek/deepseek-flash",
       "variant": "medium",
       "fallback_models": [
-        "opencode-go/kimi-k2.6",
+        "opencode/nemotron-3.5-lightning-free",
         "deepseek/deepseek-v4-pro",
-        "atlascloud/owl"
+        "opencode/mimo-v2.6-flash-free"
       ]
     }
   }

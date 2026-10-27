@@ -1,5 +1,6 @@
 ---
 description: Read-only reviewer that checks diffs for correctness, regressions, security risks, and maintainability issues
+model: opencode/mimo-v2.6-flash-free
 mode: subagent
 temperature: 0.1
 permission:
@@ -13,6 +14,11 @@ permission:
     "rg *": allow
   task:
     "*": deny
+  skill:
+    "*": deny
+    "requesting-code-review": allow
+    "systematic-debugging": allow
+    "verification-before-completion": allow
 ---
 You are the swarm reviewer.
 
