@@ -1,28 +1,29 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [
+  "plugins": [
     "file:///home/jimwong/.config/opencode/plugin/nl-resume-bridge",
-    "oh-my-openagent@latest",
-    "file:///home/jimwong/.config/opencode/plugin/session-memory-auto"
+    "file:///home/jimwong/.config/opencode/plugin/context-compressor",
+    "file:///home/jimwong/.config/opencode/plugin/session-memory-auto",
+    "file:///home/jimwong/.config/opencode/plugin/session-memory-auto-probe",
+    "oh-my-openagent@latest"
   ],
   "mcp": {
     "github": {
       "type": "local",
       "command": [
         "node",
-        "/home/jimwong/.config/Code/User/globalStorage/rooveterinaryinc.roo-cline/github-mcp/node_modules/@modelcontextprotocol/server-github/dist/index.js"
+        "/home/jimwong/.npm-global/lib/node_modules/@modelcontextprotocol/server-github/dist/index.js"
       ],
       "environment": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "REDACTED_TOKEN"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PERSONAL_ACCESS_TOKEN}"
       },
       "enabled": true
     },
     "filesystem": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
+        "node",
+        "/home/jimwong/.npm-global/lib/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js",
         "/home/jimwong"
       ],
       "enabled": true
@@ -30,220 +31,194 @@
     "puppeteer": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-puppeteer"
+        "node",
+        "/home/jimwong/.npm-global/lib/node_modules/@modelcontextprotocol/server-puppeteer/dist/index.js"
       ],
       "enabled": true
     },
     "memory": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-memory"
+        "node",
+        "/home/jimwong/.npm-global/lib/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
       ],
       "enabled": true
     },
     "playwright": {
       "type": "local",
       "command": [
+        "node",
+        "/home/jimwong/.npm-global/lib/node_modules/@playwright/mcp/cli.js",
+        "--user-data-dir=/home/jimwong/.cache/ms-playwright/opencode-automation-profile"
+      ],
+      "enabled": true
+    },
+    "multi-agent-collab": {
+      "type": "local",
+      "command": [
+        "/usr/bin/env",
+        "-u",
+        "PYTHONPATH",
+        "/usr/bin/python3",
+        "/home/jimwong/projects/multi-agent-collab/collab/mcp_server.py"
+      ],
+      "enabled": true
+    },
+    "ghidra": {
+      "type": "local",
+      "command": [
+        "/home/jimwong/projects/ghidra-mcp-serve.sh"
+      ],
+      "environment": {
+        "GHIDRA_INSTALL_DIR": "/opt/ghidra_12.1.4_PUBLIC"
+      },
+      "enabled": true
+    },
+    "rea": {
+      "type": "local",
+      "command": [
+        "/usr/bin/node",
+        "/home/jimwong/projects/rea/scripts/rea.mjs",
+        "mcp"
+      ],
+      "environment": {
+        "REA_WABT_BIN_DIRECTORY": "/usr/bin",
+        "REA_TSHARK_COMMAND": "/usr/bin/tshark",
+        "REA_SIGROK_COMMAND": "/usr/bin/sigrok-cli",
+        "REA_BINWALK_COMMAND": "/usr/bin/binwalk",
+        "REA_GDB_COMMAND": "/usr/bin/gdb",
+        "REA_APKTOOL_COMMAND": "/usr/bin/apktool",
+        "REA_ADB_PATH": "/usr/local/bin/adb",
+        "REA_OBJDUMP_COMMAND": "/usr/bin/objdump",
+        "REA_PWNTOOLS_PYTHON": "/usr/bin/python3",
+        "PYTHONPATH": "",
+        "PYTHONNOUSERSITE": "0"
+      },
+      "enabled": true
+    },
+    "anysearch": {
+      "type": "remote",
+      "url": "https://api.anysearch.com/mcp",
+      "headers": {
+        "Authorization": "Bearer as_sk_516a0e72d7283dd9a0901980f8c4816d"
+      },
+      "enabled": true
+    },
+    "context7": {
+      "type": "local",
+      "command": [
+        "/usr/bin/node",
+        "/home/jimwong/.mcp-servers/context7/node_modules/@upstash/context7-mcp/dist/index.js"
+      ],
+      "enabled": true
+    },
+    "cua-windows": {
+      "type": "local",
+      "command": [
+        "ssh",
+        "root@10.100.1.221",
+        "python C:/mcp_bridge.py"
+      ],
+      "enabled": true
+    },
+    "grep_app": {
+      "type": "local",
+      "command": [
+        "/usr/bin/node",
+        "/home/jimwong/.mcp-servers/grepapp/node_modules/@iflow-mcp/ai-tools-all-grep_app_mcp/dist/server-stdio.js"
+      ],
+      "enabled": true
+    },
+    "pg_llmgateway": {
+      "type": "local",
+      "command": [
+        "ssh",
+        "jimwong@10.100.1.17",
+        "/home/jimwong/.mcp/pg-llmgateway.sh"
+      ],
+      "enabled": true
+    },
+    "pg_session_memory": {
+      "type": "local",
+      "command": [
+        "ssh",
+        "jimwong@10.100.1.13",
         "npx",
         "-y",
-        "@playwright/mcp@0.0.38"
+        "enhanced-postgres-mcp-server",
+        "postgres://postgres@127.0.0.1:5432/session_memory?sslmode=disable"
+      ],
+      "enabled": true
+    },
+    "wechat": {
+      "type": "local",
+      "command": [
+        "/usr/bin/python3",
+        "/home/jimwong/wechat-mcp-server.py"
+      ],
+      "enabled": true
+    },
+    "obscura": {
+      "type": "local",
+      "command": [
+        "/home/jimwong/.local/bin/obscura-mcp"
+      ],
+      "enabled": true
+    },
+    "codegraph": {
+      "type": "local",
+      "command": [
+        "/home/jimwong/.npm-global/bin/codegraph",
+        "serve",
+        "--mcp"
       ],
       "enabled": true
     }
   },
   "provider": {
-    "digitflow": {
+    "llm-gateway": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "DigitFlow API",
+      "name": "LLM Gateway",
       "options": {
-        "baseURL": "http://127.0.0.1:8787/v1",
-        "headers": {
-          "Authorization": "Bearer ***REMOVED-API-KEY***"
-        }
+        "baseURL": "http://10.100.1.17:8085/v1",
+        "apiKey": "opencode-local"
       },
       "models": {
-        "claude-opus-4-6": {
-          "name": "Claude Opus 4.6"
+        "council": {
+          "name": "Council 三模型共识"
         },
-        "gpt-5.4": {
-          "name": "GPT-5.4"
+        "council-review": {
+          "name": "Council 审查面板"
         },
-        "gemini-3-pro-preview": {
-          "name": "Gemini 3 Pro Preview"
+        "cascade": {
+          "name": "Cascade 小模型升级"
         },
-        "claude-opus-4-5-20251101-thinking": {
-          "name": "Claude Opus 4.5 Thinking"
+        "glm-5.2": {
+          "name": "GLM 5.2"
         },
-        "gpt-5.3-codex": {
-          "name": "GPT-5.3 Codex"
+        "deepseek-v4-flash": {
+          "name": "DeepSeek V4 Flash"
         },
-        "claude-sonnet-4-6": {
-          "name": "Claude Sonnet 4.6"
+        "longcat-2.5-preview": {
+          "name": "LongCat 2.5 Preview"
         },
-        "gemini-2.0-flash": {
-          "name": "Gemini 2.0 Flash"
+        "longcat-2.5-preview-search": {
+          "name": "LongCat 2.5 Search"
         },
-        "gemini-1.5-pro": {
-          "name": "Gemini 1.5 Pro"
+        "nvidia/nemotron-3-ultra-550b-a55b:free": {
+          "name": "Nemotron 3 Ultra (free)"
         },
-        "grok-4-1-fast-non-reasoning": {
-          "name": "Grok 4.1 Fast"
+        "nvidia/nemotron-3.5-super-vl:free": {
+          "name": "Nemotron 3.5 Super VL (free)"
         },
-        "gpt-4o": {
-          "name": "GPT-4o"
+        "thinkingmachines/inkling:free": {
+          "name": "Inkling (free)"
         },
-        "gemini-1.5-flash": {
-          "name": "Gemini 1.5 Flash"
-        },
-        "claude-haiku-4-5-20251001": {
-          "name": "Claude Haiku 4.5"
-        },
-        "gpt-4o-mini": {
-          "name": "GPT-4o Mini"
-        },
-        "o3": {
-          "name": "OpenAI o3"
-        },
-        "o3-mini": {
-          "name": "OpenAI o3 Mini"
-        }
-      }
-    },
-    "custom-ai": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Custom AI (HK-1 网关)",
-      "options": {
-        "baseURL": "https://hk-1.pucode.com/v1",
-        "headers": {
-          "Authorization": "Bearer ***REMOVED-API-KEY***"
-        }
-      },
-      "models": {
-        "gemini-3.1-pro-high": {
-          "name": "Gemini 3.1 Pro High"
-        },
-        "gemini-3-flash": {
-          "name": "Gemini 3 Flash"
-        },
-        "gemini-3.1-flash-lite": {
-          "name": "Gemini 3.1 Flash Lite"
-        },
-        "gemini-3.1-pro-low": {
-          "name": "Gemini 3.1 Pro Low"
-        }
-      }
-    },
-    "pucode": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "PUCode API",
-      "options": {
-        "baseURL": "https://hk-1.pucode.com/v1",
-        "headers": {
-          "Authorization": "Bearer ***REMOVED-API-KEY***"
-        }
-      },
-      "models": {
-        "gpt-5.4": {
-          "name": "GPT-5.4"
-        },
-        "gpt-5.3-codex": {
-          "name": "GPT-5.3 Codex"
-        },
-        "claude-sonnet-4-6": {
-          "name": "Claude Sonnet 4.6"
-        },
-        "claude-opus-4-6": {
-          "name": "Claude Opus 4.6"
-        },
-        "claude-opus-4-5-20251101-thinking": {
-          "name": "Claude Opus 4.5 Thinking"
-        }
-      }
-    },
-    "gemini-gateway": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Gemini 网关 (AG/AG2 双线路)",
-      "options": {
-        "baseURL": "https://hk-1.pucode.com/v1",
-        "headers": {
-          "Authorization": "Bearer ***REMOVED-API-KEY***"
-        }
-      },
-      "models": {
-        "ag/claude-opus-4-6": {
-          "name": "Claude Opus 4.6 (AG)"
-        },
-        "ag/claude-opus-4-6-thinking": {
-          "name": "Claude Opus 4.6 Thinking (AG)"
-        },
-        "ag/gemini-3.1-pro-high": {
-          "name": "Gemini 3.1 Pro High (AG)"
-        },
-        "ag/gemini-3.1-pro-high-thinking": {
-          "name": "Gemini 3.1 Pro High Thinking (AG)"
-        },
-        "ag/claude-sonnet-4-6": {
-          "name": "Claude Sonnet 4.6 (AG)"
-        },
-        "ag/claude-sonnet-4-6-thinking": {
-          "name": "Claude Sonnet 4.6 Thinking (AG)"
-        },
-        "ag/gemini-3-flash": {
-          "name": "Gemini 3 Flash (AG)"
-        },
-        "ag/gemini-3-flash-thinking": {
-          "name": "Gemini 3 Flash Thinking (AG)"
-        },
-        "ag/gemini-3.1-pro-low": {
-          "name": "Gemini 3.1 Pro Low (AG)"
-        },
-        "ag/gemini-3.1-pro-low-thinking": {
-          "name": "Gemini 3.1 Pro Low Thinking (AG)"
-        },
-        "ag/gemini-3.1-flash-lite": {
-          "name": "Gemini 3.1 Flash Lite (AG)"
-        },
-        "ag/gemini-3.1-flash-lite-thinking": {
-          "name": "Gemini 3.1 Flash Lite Thinking (AG)"
-        }
-      }
-    },
-    "novai": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "NovaI API (Grok 系列)",
-      "options": {
-        "baseURL": "https://us.novaiapi.com/v1",
-        "headers": {
-          "Authorization": "Bearer ***REMOVED-API-KEY***"
-        }
-      },
-      "models": {
-        "[次]grok-4-deepsearch": {
-          "name": "Grok 4 Deep Search"
-        },
-        "[次]grok-4.2": {
-          "name": "Grok 4.2"
-        },
-        "[次]grok-420-agents": {
-          "name": "Grok 420 Agents"
-        },
-        "[次]grok-4": {
-          "name": "Grok 4"
-        },
-        "[次]grok-420-fast": {
-          "name": "Grok 420 Fast"
-        },
-        "[次]grok-420-thinking": {
-          "name": "Grok 420 Thinking"
-        },
-        "[次]grok-3": {
-          "name": "Grok 3"
+        "sensenova-6.8-flash-lite": {
+          "name": "SenseNova 6.8 Flash Lite"
         }
       }
     }
-  }
+  },
+  "model": "opencode/deepseek-v4.1-flash-free"
 }
