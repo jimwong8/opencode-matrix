@@ -59,17 +59,19 @@ function collectUserText(parts) {
     .trim();
 }
 
-export async function server() {
-  return {
-    "chat.message": async (_input, output) => {
-      const combinedText = collectUserText(output.parts);
-      if (!combinedText) return;
-      if (!shouldRewrite(combinedText)) return;
+/**
+ * OpenCode v2 插件入口。
+ * v1 的 `chat.message` hook 在 v2 中对应 `ctx.session.hook("prompt", ...)`，
+ * 事件对象从 (input, output) 改为单一可变事件，文本位于 `event.prompt.text`。
+ */
+export async function setup(ctx) {
+  await ctx.session.hook("prompt", (event) => {
+    const text = event?.prompt?.text;
+    if (typeof text !== "string" || !text.trim()) return;
+    if (!shouldRewrite(text)) return;
 
-      output.parts = [{ type: "text", text: "/continue-conversation" }];
-      output.message.role = "user";
-    },
-  };
+    event.prompt.text = "/continue-conversation";
+  });
 }
 
-export default { id, server };
+export default { id, setup };
