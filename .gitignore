@@ -7,3 +7,25 @@ node_modules/
 *.swp
 *~
 *.db
+
+# 备份 / 临时归档（apply-matrix.sh 与手工备份产生，不入库）
+*.bak-*
+*.bak.*
+*.pre-*
+backup-fix-*/
+plugin-backups-*/
+
+# 本地运行态或含敏感信息，不入库
+service.json
+cli.json
+removed-providers-*.json
+
+# herdr 生成并托管的文件（重装/升级会覆盖）
+herdr-tui-session.js
+herdr-opencode/
+plugins/herdr-agent-state.js
+tui.jsonc
+
+# 技能目录中的大体积二进制资产与嵌套环境
+skills/canvas-design/canvas-fonts/
+skills/google-ai-mode-skill/
